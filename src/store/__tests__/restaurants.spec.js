@@ -23,7 +23,7 @@ describe('restaurants', () => {
         restaurantsReducer,
         initialState,
         applyMiddleware(thunk.withExtraArgument(api)),
-      )
+      );
 
       await store.dispatch(loadRestaurants());
 

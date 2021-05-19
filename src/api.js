@@ -1,8 +1,9 @@
-import axios from 'axios'
+import axios from 'axios';
 
 const client = axios.create({
-  baseURL: 'https://outside-in-dev-api.herokuapp.com/dR5mZOOUsHllIbRnyjGsYC0u9IkEkeUx',
-})
+  baseURL:
+    'https://outside-in-dev-api.herokuapp.com/dR5mZOOUsHllIbRnyjGsYC0u9IkEkeUx',
+});
 
 const api = {
   loadRestaurants() {

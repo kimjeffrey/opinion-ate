@@ -5,7 +5,7 @@ import {loadRestaurants} from '../store/restaurants/actions';
 export const RestaurantList = ({loadRestaurants, restaurants}) => {
   useEffect(() => {
     loadRestaurants();
-  }, [loadRestaurants])
+  }, [loadRestaurants]);
 
   return (
     <ul>
@@ -13,8 +13,8 @@ export const RestaurantList = ({loadRestaurants, restaurants}) => {
         <li key={restaurant.id}>{restaurant.name}</li>
       ))}
     </ul>
-  )
-}
+  );
+};
 
 const mapStateToProps = state => ({
   restaurants: state.restaurants.records,

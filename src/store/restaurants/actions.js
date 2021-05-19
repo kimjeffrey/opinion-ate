@@ -9,4 +9,4 @@ export const loadRestaurants = () => (dispatch, getState, api) => {
 const storeRestaurants = records => ({
   type: STORE_RESTAURANTS,
   records,
-})
+});

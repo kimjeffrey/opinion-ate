@@ -1,4 +1,4 @@
-import {render} from '@testing-library/react' 
+import {render} from '@testing-library/react';
 import {RestaurantList} from '../RestaurantList';
 
 describe('RestaurantList', () => {
@@ -12,7 +12,10 @@ describe('RestaurantList', () => {
   beforeEach(() => {
     loadRestaurants = jest.fn().mockName('loadRestaurants');
     context = render(
-      <RestaurantList loadRestaurants={loadRestaurants} restaurants={restaurants} />,
+      <RestaurantList
+        loadRestaurants={loadRestaurants}
+        restaurants={restaurants}
+      />,
     );
   });
 
@@ -25,5 +28,5 @@ describe('RestaurantList', () => {
 
     expect(queryByText('Sushi Place')).not.toBeNull();
     expect(queryByText('Pizza Place')).not.toBeNull();
-  })
+  });
 });
