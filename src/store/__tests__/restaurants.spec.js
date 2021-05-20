@@ -4,30 +4,75 @@ import restaurantsReducer from '../restaurants/reducers';
 import {loadRestaurants} from '../restaurants/actions';
 
 describe('restaurants', () => {
+  describe('initially', () => {
+    it('does not have the loading flag set', () => {
+      const initialState = {};
+
+      const store = createStore(
+        restaurantsReducer,
+        initialState,
+        applyMiddleware(thunk),
+      );
+
+      expect(store.getState().loading).toEqual(false);
+    })
+  })
+
   describe('loadRestaurants action', () => {
-    it('stores the restaurants', async () => {
+    describe('when loading succeeds', () => {
       const records = [
         {id: 1, name: 'Sushi Place'},
         {id: 2, name: 'Pizza Place'},
       ];
 
-      const api = {
-        loadRestaurants: () => Promise.resolve(records),
-      };
+      let store;
 
-      const initialState = {
-        records: [],
-      };
+      beforeEach(() => {
+        const api = {
+          loadRestaurants: () => Promise.resolve(records),
+        };
+  
+        const initialState = {
+          records: [],
+        };
+  
+        store = createStore(
+          restaurantsReducer,
+          initialState,
+          applyMiddleware(thunk.withExtraArgument(api)),
+        );
+  
+        return store.dispatch(loadRestaurants());
+      })
 
-      const store = createStore(
-        restaurantsReducer,
-        initialState,
-        applyMiddleware(thunk.withExtraArgument(api)),
-      );
+      it('stores the restaurants', () => {
+        expect(store.getState().records).toEqual(records);
+      });
 
-      await store.dispatch(loadRestaurants());
+      it('clears the loading flag', () => {
+        expect(store.getState().loading).toEqual(false);
+      })
+    });
 
-      expect(store.getState().records).toEqual(records);
+    describe('while loading', () => {
+      it('sets a loading flag', () => {
+        const api = {
+          loadRestaurants: () => new Promise(() => {}),
+        };
+
+        const initialState = {};
+
+        const store = createStore(
+          restaurantsReducer,
+          initialState,
+          applyMiddleware(thunk.withExtraArgument(api)),
+        );
+        
+        // no await because we want to check the state immediately, before it resolves
+        store.dispatch(loadRestaurants());
+
+        expect(store.getState().loading).toEqual(true);
+      })
     });
   });
 });
