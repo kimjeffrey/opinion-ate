@@ -15,17 +15,21 @@ describe('RestaurantList', () => {
       restaurants,
       loading: false,
       ...propOverrides,
-    }
+    };
     loadRestaurants = props.loadRestaurants;
-    
-    context = render(
-      <RestaurantList {...props} />,
-    );
-  }
+
+    context = render(<RestaurantList {...props} />);
+  };
 
   it('loads restaurants on first render', () => {
     renderWithProps();
     expect(loadRestaurants).toHaveBeenCalled();
+  });
+
+  it('displays the loading indicator while loading', () => {
+    renderWithProps({loading: true});
+    const {queryByTestId} = context;
+    expect(queryByTestId('loading-indicator')).not.toBeNull();
   });
 
   describe('when loading succeeds', () => {
@@ -35,7 +39,7 @@ describe('RestaurantList', () => {
 
     it('displays the restaurants', () => {
       const {queryByText} = context;
-  
+
       expect(queryByText('Sushi Place')).not.toBeNull();
       expect(queryByText('Pizza Place')).not.toBeNull();
     });
@@ -44,15 +48,21 @@ describe('RestaurantList', () => {
       const {queryByTestId} = context;
       expect(queryByTestId('loading-indicator')).toBeNull();
     });
-  })
 
-  
+    it('does not display the error message', () => {
+      const {queryByText} = context;
+      expect(queryByText('Restaurants could not be loaded.')).toBeNull();
+    });
+  });
 
-  it('displays the loading indicator while loading', () => {
-    renderWithProps({loading: true});
-    const {queryByTestId} = context;
-    expect(queryByTestId('loading-indicator')).not.toBeNull();
-  })
+  describe('when loading fails', () => {
+    beforeEach(() => {
+      renderWithProps({loadError: true});
+    });
 
-  
+    it('displays the error message', () => {
+      const {queryByText} = context;
+      expect(queryByText('Restaurants could not be loaded.')).not.toBeNull();
+    });
+  });
 });
