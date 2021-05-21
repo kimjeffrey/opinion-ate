@@ -1,9 +1,9 @@
 import {useState} from 'react';
-import { Box, Button, TextField } from '@material-ui/core';
-import {makeStyles} from '@material-ui/core/styles'
-import { connect } from 'react-redux';
+import {Box, Button, TextField} from '@material-ui/core';
+import {makeStyles} from '@material-ui/core/styles';
+import {connect} from 'react-redux';
 import {createRestaurant} from '../store/restaurants/actions';
-import { Alert } from '@material-ui/lab';
+import {Alert} from '@material-ui/lab';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -21,7 +21,7 @@ export const NewRestaurantForm = ({createRestaurant}) => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    if(name) {
+    if (name) {
       setValidationError(false);
       setServerError(false);
       createRestaurant(name)
@@ -34,15 +34,15 @@ export const NewRestaurantForm = ({createRestaurant}) => {
     } else {
       setValidationError(true);
     }
-  }
+  };
 
   return (
     <form onSubmit={handleSubmit}>
-      {serverError && 
+      {serverError && (
         <Alert severity="error">
           The restaurant could not be saved. Please try again.
         </Alert>
-      }
+      )}
       {validationError && <Alert severity="error">Name is required</Alert>}
       <Box display="flex" className={classes.root}>
         <TextField
@@ -62,7 +62,7 @@ export const NewRestaurantForm = ({createRestaurant}) => {
         </Button>
       </Box>
     </form>
-  )
+  );
 };
 
 const mapStateToProps = null;

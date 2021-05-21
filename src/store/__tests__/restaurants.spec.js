@@ -164,7 +164,7 @@ describe('restaurants', () => {
 
       it('resolves', () => {
         return expect(promise).resolves.toBeUndefined();
-      })
+      });
     });
 
     describe('when save fails', () => {

@@ -11,7 +11,7 @@ const api = {
   },
   createRestaurant(name) {
     return client.post('/restaurants', {name}).then(res => res.data);
-  }
+  },
 };
 
 export default api;
