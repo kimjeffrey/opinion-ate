@@ -1,10 +1,20 @@
 import {useState} from 'react';
-import { Button, TextField } from '@material-ui/core';
+import { Box, Button, TextField } from '@material-ui/core';
+import {makeStyles} from '@material-ui/core/styles'
 import { connect } from 'react-redux';
 import {createRestaurant} from '../store/restaurants/actions';
 import { Alert } from '@material-ui/lab';
 
+const useStyles = makeStyles(theme => ({
+  root: {
+    '& > *': {
+      margin: theme.spacing(1),
+    },
+  },
+}));
+
 export const NewRestaurantForm = ({createRestaurant}) => {
+  const classes = useStyles();
   const [name, setName] = useState('');
   const [validationError, setValidationError] = useState(false);
   const [serverError, setServerError] = useState(false);
@@ -34,21 +44,23 @@ export const NewRestaurantForm = ({createRestaurant}) => {
         </Alert>
       }
       {validationError && <Alert severity="error">Name is required</Alert>}
-      <TextField
-        placeholder="Add Restaurant"
-        fullWidth
-        variant="filled"
-        value={name}
-        onChange={e => setName(e.target.value)}
-      />
-      <Button
-        type="submit"
-        variant="contained"
-        color="primary"
-        data-testid="new-restaurant-submit-button"
-      >
-        Add
-      </Button>
+      <Box display="flex" className={classes.root}>
+        <TextField
+          placeholder="Add Restaurant"
+          fullWidth
+          variant="filled"
+          value={name}
+          onChange={e => setName(e.target.value)}
+        />
+        <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          data-testid="new-restaurant-submit-button"
+        >
+          Add
+        </Button>
+      </Box>
     </form>
   )
 };
